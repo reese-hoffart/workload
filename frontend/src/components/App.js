@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import Login from '../components/Login'
 import Home from '../components/Home'
+import CreateEvent from './CreateEvent';
+import Density from './Denisity';
 
 function getCookie(cname) {
   let name = cname + "=";
@@ -20,12 +22,12 @@ function getCookie(cname) {
   return "";
 }
 
-function PrivateRoute() {
+function PrivateRoute({child, ...rest}) {
   let cookie = getCookie('workloadid')
   if (cookie === '') {
     return <Redirect to={{pathname:"/login"}}/>
   } else {
-    return <Route/>
+    return <Route {...rest} render={({ location }) => child} />
   }
 }
 
@@ -33,14 +35,22 @@ class App extends react.Component {
   render() {
     return (
       <div className="wrapper">
-        <h1>Workload</h1>
         <BrowserRouter>
           <Switch>
             <Route path="/login">
               <Login/>
             </Route>
+            <PrivateRoute path="/event">
+              <CreateEvent/>
+            </PrivateRoute>
+            <PrivateRoute path="/density">
+              <Density/>
+            </PrivateRoute>
             <PrivateRoute path="/home">
-              <Home />
+              <Home/>
+            </PrivateRoute>
+            <PrivateRoute path="/">
+              <Home/>
             </PrivateRoute>
           </Switch>
         </BrowserRouter>

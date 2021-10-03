@@ -27,7 +27,7 @@ class Login extends React.Component {
           <Col>
             <Container style={{marginTop: '20vh'}}>
               <Image src={logo} alt="logo"/>
-              <Form action='/home' onSubmit={this.handleSubmit}>
+              <Form action='/' onSubmit={this.handleSubmit}>
                 <Form.Group className="mb-3" name="name" controlId="formBasicEmail">
                   <Form.Label>Name</Form.Label>
                   <Form.Control type="" name="name" placeholder="John Doe" />
