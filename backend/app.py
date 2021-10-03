@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from mysql.connector import connect, Error
 import json, time
 import os
+from markupsafe import escape
 
 load_dotenv()
 app = Flask(__name__)
@@ -47,8 +48,8 @@ def createEvent():
     class_id = classNameToID(request.form.get("name"), request.form.get("period"))
     execute_query(f'INSERT INTO Deadlines (date, class_id, name, description) VALUES ("{date}", "{class_id}", "{name}", "{description}");')
 
-@app.route("/density/<int:teachid>")
-def density():
+@app.route("/density/<teachid>")
+def density(teachid):
     teacherClasses = json.loads(execute_query(f'SELECT id FROM Classes WHERE teacher_id={teachid}'))
     teacherStudents = []
     for classid in teacherClasses:
