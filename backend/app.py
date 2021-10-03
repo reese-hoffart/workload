@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from mysql.connector import connect, Error
 import json
 import os
+from markupsafe import escape
 
 load_dotenv()
 app = Flask(__name__)
@@ -21,9 +22,9 @@ def classNameToID(name, period):
 def hello():
     return "<p>Hello</p>"
 
-@app.route("/login/<string:username>")
-def login():
-    return execute_query(f'SELECT id FROM Teachers WHERE name="{username}" LIMIT 1;')
+@app.route("/login/<username>")
+def login(username):
+    return execute_query(f'SELECT id FROM Teachers WHERE name="{escape(username)}" LIMIT 1;')
 
 @app.route("/events")
 def events():
@@ -37,8 +38,8 @@ def createEvent():
     class_id = classNameToID(request.form["name"], request.form["period"])
     execute_query(f'INSERT INTO Deadlines (date, class_id, name, description) VALUES ("{date}", "{class_id}", "{name}", "{description}");')
 
-@app.route("/density/<int:teachid>")
-def density():
+@app.route("/density/<teachid>")
+def density(teachid):
     teacherClasses = json.loads(execute_query(f'SELECT id FROM Classes WHERE teacher_id={teachid}'))
     teacherStudents = []
     for classid in teacherClasses:
