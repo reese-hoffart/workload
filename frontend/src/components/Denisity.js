@@ -22,7 +22,7 @@ class Day extends React.Component {
             <h4 style={{ float: 'right' }}>{this.props.day}</h4>
           </Col>
           <Col>
-            <h4 style={{ float: 'left' }}>{this.props.students} Students are busy.</h4>
+            <h4 style={{ float: 'left', color:'gray'}}>{this.props.students} Students are busy.</h4>
           </Col>
         </Row>
       </Container>

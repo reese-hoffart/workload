@@ -11,12 +11,25 @@ import App from './App'
 import { Redirect } from 'react-router-dom'
 
 class Login extends React.Component {
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     const data = new FormData(event.target)
     var input
     data.forEach((d) => {input = d})
     if (input === '') return ''
-    document.cookie = "workloadid=" + input
+    var id
+    /*fetch("http://127.0.0.1:5000/login/"+input)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          id = result[0].id
+          document.cookie = "workloadid=" + id
+        },
+        (error) => {
+          console.log("ERROR!")
+          console.log(error)
+        }
+      )*/
+      document.cookie = "workloadid=1"
   }
 
   render() {
@@ -27,7 +40,7 @@ class Login extends React.Component {
           <Col>
             <Container style={{marginTop: '20vh'}}>
               <Image src={logo} alt="logo"/>
-              <Form action='/' onSubmit={this.handleSubmit}>
+              <Form action="/" onSubmit={this.handleSubmit}>
                 <Form.Group className="mb-3" name="name" controlId="formBasicEmail">
                   <Form.Label>Name</Form.Label>
                   <Form.Control type="" name="name" placeholder="John Doe" />

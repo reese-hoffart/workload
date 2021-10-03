@@ -15,7 +15,27 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 class Home extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { selectedDate: this.timestampToDate(Date()) }
+    this.state = {
+      selectedDate: this.timestampToDate(Date()),
+      events: []
+    }
+    fetch("http://127.0.0.1:5000/events")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          var eventRes = []
+          result.forEach(e => {
+            console.log(e.name)
+              eventRes.push({title:e.name, date:e.date})
+          });
+          this.setState({
+            events: eventRes
+          })
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
   }
 
   render() {
@@ -35,7 +55,7 @@ class Home extends React.Component {
                 </Form>
               </div>
             </Row>
-            <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
+            <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" events={this.state.events}/>
             <br />
             <h3 style={{ textAlign: 'center' }}>{this.state.selectedDate}</h3>
           </Col>

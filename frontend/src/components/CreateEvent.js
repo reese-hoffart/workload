@@ -29,7 +29,7 @@ class CreateEvent extends React.Component {
         <Row style={{paddingTop:'100px'}}>
           <Col />
           <Col xs={6}>
-            <Form>
+            <Form action="http://127.0.0.1:5000/events/create" method="POST">
               <Form.Group className="mb-3" name="name" controlId="formBasicName">
                 <Form.Control type="" name="name" placeholder="Event Name " />
               </Form.Group>
